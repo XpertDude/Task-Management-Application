@@ -1,1 +1,187 @@
- 
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: "Patrick Hand", cursive;
+    font-style: normal;
+    box-sizing: border-box;
+    background-image: url(https://i.ibb.co/mCkmyxP/wp6705749-moutains-ultra-hd-wallpapers.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+:root{
+    --maine-color:  rgb(44, 207, 236);
+}
+/*nav bar styling start*/
+a{
+    text-decoration: none;
+}
+
+h1 a{
+    color: black;
+}
+
+nav{
+    font-size: 20px;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav ul a{
+    color: black;
+    padding: 2px;
+    border-radius: 10%;
+    transition: all 0.3s ease;
+}
+
+nav ul a:hover{
+    background-color: var(--maine-color);
+}
+
+/*nav bar styling end*/
+
+/*tasks styling start*/
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-search{
+    width: 90%;
+    display: grid;
+    grid-template-columns: 100px 100px 200px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.add-search #add-task{
+    grid-column: 2 / -2;
+    padding: 5px;
+    background-color: transparent;
+    border-radius: 4%;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#add-task:hover{
+    background-color: var(--maine-color);
+}
+
+.add-search .search-bar{
+    grid-column: 3 / -1;
+    display: flex;
+}
+
+.search-bar input{
+    padding: 5px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    border-bottom: 1px solid var(--maine-color);
+    margin-right: 5px;
+}
+
+.search-bar button{
+    padding: 5px;
+    background: none;
+    border-radius: 4%;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    color: var(--maine-color);
+}
+
+.tasks-container{
+    display: grid;
+    grid-template-columns: repeat(4, 250px);
+    grid-template-rows: max-content;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    padding: 20px;
+    margin: 10px;
+}
+.task{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    gap: 2px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.123);
+    backdrop-filter: blur(2px);
+    font-size: medium;
+}
+
+.task h2{
+    width: 200px;
+    height: auto;
+    font-size: 15px;
+    overflow: hidden;
+    text-align: center;
+}
+
+#input-task{
+    width: 30%;
+    height: 35%;
+    padding: 10px;
+    background-color: var(--maine-color);
+    border: none;
+    transition: all 0.3s ease;
+}
+#input-task input, select{
+    width: 60%;
+}
+#input-task section{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border: none;
+    width: 100%;
+    background-color: var(--maine-color);
+}
+#exit-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+#add-btn{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    width: 60px;
+}
+
+#cancel-btn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    width: 60px;
+}
+/*tasks styling end*/

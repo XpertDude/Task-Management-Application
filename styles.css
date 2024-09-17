@@ -1,4 +1,4 @@
-body{
+html, body{
     margin: 0;
     padding: 0;
     width: 100%;
@@ -6,6 +6,9 @@ body{
     font-family: "Patrick Hand", cursive;
     font-style: normal;
     box-sizing: border-box;
+}
+
+body{
     background-image: url(https://i.ibb.co/mCkmyxP/wp6705749-moutains-ultra-hd-wallpapers.jpg);
     background-size: cover;
     background-position: center center;
@@ -152,9 +155,9 @@ main{
 #input-task input, select{
     width: 60%;
 }
-#input-task section{
+#input-task form{
     position: relative;
-    display: flex;
+    display: flex;   
     flex-direction: column;
     justify-content: center;
     align-items: center;

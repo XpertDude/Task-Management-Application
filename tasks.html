@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Life+Savers:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Task Management Application</title>
+</head>
+
+<body>
+    <nav>
+        <h1><a href="index.html">Task Management</a></h1>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tasks.html">Tasks</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="add-search">
+            <button id="add-task">Add Task</button>
+            <div class="search-bar">
+                <input type="text"><button><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg></button>
+            </div>
+        </div>
+
+        <dialog id="input-task">
+            <form id="form">
+                <span id="exit-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
+                </svg></span>
+                <input type="text" id="title" placeholder="Your title" required>
+            <select name="Priority indicator" id="priority">
+                <option value="" disabled selected required>Select Priority</option>
+                <option value="Urgent">Urgent</option>
+                <option value="Normal">Normal</option>
+            </select>
+            <select name="Statut indicator" id="statut">
+                <option value="" disabled selected required>Select statut</option>
+                <option value="Completed">Completed</option>
+                <option value="Uncomlpleted">Uncomlpleted</option>
+                <option value="In progress">In progress</option>
+            </select>
+            <input type="date" id="date" required>
+            </form>
+            <button id="add-btn">add</button><button  id="cancel-btn">Cancel</button>
+            <button id="save-btn" class="hidden">Save</button>
+        </dialog>
+        <section class="tasks-container" id="task-holder">
+
+        </section>
+    </main>
+    <script src="main.js"></script>
+</body>
+
+</html>

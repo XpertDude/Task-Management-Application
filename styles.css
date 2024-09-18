@@ -136,6 +136,33 @@ main{
     font-size: medium;
 }
 
+.task div{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hidden{
+    display: none;
+}
+
+.task div button{
+    background-color: var(--maine-color);
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    width: 20%;
+    border-radius: 5%;
+    transition: 0.2s ease;
+}
+
+.task div button:hover{
+    transform: scale(1.05);
+    font-weight: bold;
+    color: brown;
+}
+
 .task h2{
     width: 200px;
     height: auto;
@@ -173,6 +200,14 @@ main{
     cursor: pointer;
 }
 #add-btn{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    width: 60px;
+}
+
+#save-btn{
     position: absolute;
     bottom: 0;
     left: 0;

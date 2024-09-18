@@ -4,7 +4,12 @@ const exitBtn = document.getElementById('exit-btn');
 const taskHolder = document.getElementById('task-holder');
 const creatTask = document.getElementById('add-btn');
 const formInputs = document.getElementById('form');
+const addBtn = document.getElementById('add-btn');
+const saveBtn = document.getElementById('save-btn');
+const cancelBtn = document.getElementById('cancel-btn')
+//creatin object and id tracker to handle the nested objects
 let taskObj = {};
+let curId = null;
 const taskObject = (title, priority, statut, date) => {
     return {
         id: `${title.toLowerCase().split(" ").join("-")}-${Date.now()}`,
@@ -14,7 +19,6 @@ const taskObject = (title, priority, statut, date) => {
         date: date
     };
 }
-
 // creating task div and add it to container
 const taskDiv = (task) => {
     let taskEle = document.createElement('div');
@@ -41,14 +45,19 @@ const taskDiv = (task) => {
     taskEle.append(titleEle, paragraph2, paragraph3, paragraph4, divBtn);
     taskHolder.appendChild(taskEle);
     }
+    editBtn.addEventListener('click', () => {
+        editTask(task);
+        addBtn.classList.add('hidden');
+        saveBtn.classList.remove('hidden');
+    });
+    deletBtn.addEventListener('click', deleteTask);
 };
-
-
 const taskValues = () => {
-    const priority = document.getElementById('priority').value;
-    const statut = document.getElementById('statut').value;
-    const title = document.getElementById('title').value;
-    const date = document.getElementById('date').value;
+    //getting values from the inputs
+let priority = document.getElementById('priority').value;
+let statut = document.getElementById('statut').value;
+let title = document.getElementById('title').value;
+let date = document.getElementById('date').value;
     //add task to the task object
     const task = taskObject(title, priority, statut, date);
     taskObj[task.id] = task;
@@ -56,7 +65,23 @@ const taskValues = () => {
     closeDialog();
 }
 creatTask.addEventListener('click', taskValues);
+//handling edit and delet buttons
+const editTask = (task) => {
+    curId = task.id;
+    const obj = taskObj[task.id];
+    document.getElementById('title').value = obj.title;
+    document.getElementById('priority').value = obj.priority;
+    document.getElementById('statut').value = obj.statut;
+    document.getElementById('date').value = obj.date;
+    openDialog()
+};
 
+function saveTask() {
+    
+}
+
+const deleteTask = (task) => {
+};
 //openning and closing dialog for task add
 function openDialog() {
     dialogTask.showModal();

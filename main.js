@@ -6,7 +6,9 @@ const creatTask = document.getElementById('add-btn');
 const formInputs = document.getElementById('form');
 const addBtn = document.getElementById('add-btn');
 const saveBtn = document.getElementById('save-btn');
-const cancelBtn = document.getElementById('cancel-btn')
+const cancelBtn = document.getElementById('cancel-btn');
+const alertdialog = document.getElementById('alert-dialog');
+const alertMessage = document.getElementById('alert');
 //creatin object and id tracker to handle the nested objects
 let taskObj = {};
 let curId = null;
@@ -30,39 +32,42 @@ const taskDiv = (task) => {
     let divBtn = document.createElement('div');
     let editBtn = document.createElement('button');
     let deletBtn = document.createElement('button');
+    deletBtn.addEventListener('click', () => {
+        deleteTask(task)
+    })
     editBtn.textContent = 'Edit';
     deletBtn.textContent = 'Delete';
     divBtn.append(editBtn, deletBtn);
     //getting values from taskValues
-    if (task.title === '' || task.priority === '' || task.statut ==='' || task.date ==='') {
-        alert('Please fill in the form')
+    if (task.title === '' || task.priority === '' || task.statut === '' || task.date === '') {
+        alert('please fill up the form correctly');
+        return;
     } else {
         taskEle.id = task.id;
-    titleEle.innerText = task.title;
-    paragraph2.innerText = task.priority;
-    paragraph3.textContent = task.statut;
-    paragraph4.textContent = task.date;
-    taskEle.append(titleEle, paragraph2, paragraph3, paragraph4, divBtn);
-    taskHolder.appendChild(taskEle);
+        titleEle.innerText = task.title;
+        paragraph2.innerText = task.priority;
+        paragraph3.textContent = task.statut;
+        paragraph4.textContent = task.date;
+        taskEle.append(titleEle, paragraph2, paragraph3, paragraph4, divBtn);
+        taskHolder.appendChild(taskEle);
+        closeDialog();
     }
     editBtn.addEventListener('click', () => {
         editTask(task);
         addBtn.classList.add('hidden');
         saveBtn.classList.remove('hidden');
     });
-    deletBtn.addEventListener('click', deleteTask);
 };
 const taskValues = () => {
     //getting values from the inputs
-let priority = document.getElementById('priority').value;
-let statut = document.getElementById('statut').value;
-let title = document.getElementById('title').value;
-let date = document.getElementById('date').value;
+    let priority = document.getElementById('priority').value;
+    let statut = document.getElementById('statut').value;
+    let title = document.getElementById('title').value;
+    let date = document.getElementById('date').value;
     //add task to the task object
     const task = taskObject(title, priority, statut, date);
     taskObj[task.id] = task;
     taskDiv(task);
-    closeDialog();
 }
 creatTask.addEventListener('click', taskValues);
 //handling edit and delet buttons
@@ -77,11 +82,38 @@ const editTask = (task) => {
 };
 
 function saveTask() {
-    
+    const curObject = taskObj[curId];
+    curObject.title = document.getElementById('title').value;
+    curObject.priority = document.getElementById('priority').value;
+    curObject.statut = document.getElementById('statut').value;
+    curObject.date = document.getElementById('date').value;
+    const updatedTask = document.getElementById(curId);
+    const titleTask = updatedTask.querySelector('h2');
+    const priorityTask = updatedTask.querySelector('p:nth-of-type(1)');
+    const statutTask = updatedTask.querySelector('p:nth-of-type(2)');
+    const dateTask = updatedTask.querySelector('p:nth-of-type(3)');
+    if (curObject.title === '' || curObject.priority === '' || curObject.statut === '' || curObject.date === '') {
+        alert('please fill up the form correctly')
+        return;
+    } else {
+        titleTask.innerText = curObject.title;
+        priorityTask.innerText = curObject.priority;
+        statutTask.innerText = curObject.statut;
+        dateTask.innerText = curObject.date;
+    }
+    closeDialog();
 }
-
 const deleteTask = (task) => {
+    curId = task.id;
+    if (curId) {
+        delete taskObj[curId];
+        document.getElementById(curId).remove();
+    } else {
+        alert('we unable to find the task')
+    }
 };
+saveBtn.addEventListener('click', saveTask)
+cancelBtn.addEventListener('click', closeDialog)
 //openning and closing dialog for task add
 function openDialog() {
     dialogTask.showModal();
@@ -89,7 +121,7 @@ function openDialog() {
     document.body.style.filter = 'blur(3px)';
 }
 function closeDialog() {
-    dialogTask.close();
+        dialogTask.close();
     dialogTask.style.transform = 'scale(0)';
     document.body.style.filter = 'blur(0px)';
     formInputs.reset();

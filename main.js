@@ -175,5 +175,4 @@ catAll.addEventListener('click', resetDisplay);
 catComplete.addEventListener('click', () => filterTasks('Completed'));
 catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
 catInprogress.addEventListener('click', () => filterTasks('In progress'));
-console.log(VarDate);
 

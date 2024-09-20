@@ -21,6 +21,19 @@ const taskObject = (title, priority, statut, date) => {
         date: date
     };
 }
+//creating random color generator
+let color = '5A1CE68A23F';
+
+function randomcol() {
+    const hex = '#'; // Start with a #
+    let newColor = ''; // Initialize an empty string to build the color
+    for (let i = 0; i < 6; i++) { // Loop 6 times for a valid hex color
+        const randomNum = Math.floor(Math.random() * color.length); // Generate a random index
+        newColor += color[randomNum]; // Append the random character to newColor
+    }
+    return hex + newColor; // Return the full hex color
+}
+
 // creating task div and add it to container
 const taskDiv = (task) => {
     let taskEle = document.createElement('div');
@@ -28,6 +41,7 @@ const taskDiv = (task) => {
     let titleEle = document.createElement('h2');
     let paragraph2 = document.createElement('p');
     let paragraph3 = document.createElement('p');
+    paragraph3.className ='statut'
     let paragraph4 = document.createElement('p');
     let divBtn = document.createElement('div');
     let editBtn = document.createElement('button');
@@ -35,6 +49,7 @@ const taskDiv = (task) => {
     deletBtn.addEventListener('click', () => {
         deleteTask(task)
     })
+    titleEle.style.backgroundColor = randomcol();
     editBtn.textContent = 'Edit';
     deletBtn.textContent = 'Delete';
     divBtn.append(editBtn, deletBtn);
@@ -121,10 +136,44 @@ function openDialog() {
     document.body.style.filter = 'blur(3px)';
 }
 function closeDialog() {
-        dialogTask.close();
+    dialogTask.close();
     dialogTask.style.transform = 'scale(0)';
     document.body.style.filter = 'blur(0px)';
     formInputs.reset();
 }
-addTask.addEventListener('click', openDialog)
-exitBtn.addEventListener('click', closeDialog)
+addTask.addEventListener('click', openDialog);
+exitBtn.addEventListener('click', closeDialog);
+//handeling priority filtering display
+const catComplete = document.getElementById('complet');
+const catUncomplet = document.getElementById('uncomplet');
+const catInprogress = document.getElementById('in-progress');
+const catAll = document.getElementById('all');
+function resetDisplay() {
+    document.querySelectorAll('.statut').forEach((e) => {
+        e.parentElement.style.display = '';
+    });
+}
+function filterTasks(status) {
+    resetDisplay(); 
+    document.querySelectorAll('.statut').forEach((e) => {
+        const taskStatus = e.innerText.trim().toLowerCase();
+        if (taskStatus !== status.toLowerCase()) {
+            e.parentElement.style.display = 'none';
+        }
+    });
+}
+
+function filterNon(status) {
+    document.querySelectorAll('.statut').forEach((e) => {
+        const taskStatus = e.innerText.trim().toLowerCase();
+        if (taskStatus !== status.toLowerCase()) {
+            e.parentElement.style.display = '';
+        }
+    });
+}
+catAll.addEventListener('click', resetDisplay);
+catComplete.addEventListener('click', () => filterTasks('Completed'));
+catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
+catInprogress.addEventListener('click', () => filterTasks('In progress'));
+console.log(VarDate);
+

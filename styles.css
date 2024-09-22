@@ -6,10 +6,11 @@ html, body{
     font-family: "Patrick Hand", cursive;
     font-style: normal;
     box-sizing: border-box;
-    background-color: blanchedalmond;
+    background-color: #f7f3f3;
 }
 :root{
     --maine-color:  goldenrod;
+    --back-color: #f8683d;
 }
 /*nav bar styling start*/
 a{
@@ -28,7 +29,7 @@ nav{
     justify-content: space-evenly;
     align-items: center;
     gap: 10px;
-    background-color: brown;
+    background-color: rgb(5, 38, 68);
     color: beige;
 }
 
@@ -46,7 +47,7 @@ nav ul a{
 }
 
 nav ul a:hover{
-    background-color: rgb(0, 40, 128);
+    color: var(--back-color);
 }
 
 /*nav bar styling end*/
@@ -61,14 +62,14 @@ main{
 
 .add-search{
     width: 90%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 50px 50px;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: blanchedalmond;
 }
 
-.add-search #add-task{
+.add-search #add-task, #notification{
     padding: 0;
     margin: 0;
     border: none;
@@ -77,6 +78,7 @@ main{
     color: black;
     transition: all 0.3s ease;
 }
+
 
 .cat-holder{
     display: flex;
@@ -95,7 +97,7 @@ main{
     color: aliceblue;
 }
 
-#add-task:hover{
+#add-task:hover, #notification:hover{
     color: brown;
 }
 
@@ -143,6 +145,8 @@ main{
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
+    padding: 20px;
+    margin: 20px;
 }
 
 .motnth-time{
@@ -158,9 +162,8 @@ main{
     align-items: center;
     height: 200px;
     gap: 2px;
-    padding: 5px;
     font-size: x-small;
-    background-color: rgba(240, 248, 255, 0.39);
+    box-shadow: 0 0 6px rgb(5, 38, 68);
 }
 
 .task div{
@@ -170,12 +173,16 @@ main{
     align-items: center;
 }
 
+.task h2{
+    width: 100%;
+}
+
 .hidden{
     display: none;
 }
 
 .task div button{
-    background-color: brown;
+    background-color: none;
     font-size: small;
     border: none;
     cursor: pointer;
@@ -185,9 +192,23 @@ main{
     transition: 0.2s ease;
 }
 
-.task div button:hover{
+.task div button:nth-child(1):hover{
     transform: scale(1.05);
-    color: beige;
+    color: blue;
+}
+.task div button:nth-child(2):hover{
+    transform: scale(1.05);
+    color: red;
+}
+
+.motnth-time{
+    background-color: var(--back-color);
+    border-radius: 3%;
+    text-align: center;
+}
+
+#month, #time{
+
 }
 
 .task h2{

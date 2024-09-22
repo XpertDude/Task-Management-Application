@@ -33,6 +33,14 @@ function randomcol() {
     }
     return hex + newColor; // Return the full hex color
 }
+//checking if task holder is emty
+function checkIfTaskHolderIsEmpty() {
+    if (taskHolder.children.length === 0) {
+        document.getElementById('task-message').classList.remove('hidden');
+    } else {
+        document.getElementById('task-message').classList.add('hidden');
+    }
+}
 
 // creating task div and add it to container
 const taskDiv = (task) => {
@@ -41,8 +49,9 @@ const taskDiv = (task) => {
     let titleEle = document.createElement('h2');
     let paragraph2 = document.createElement('p');
     let paragraph3 = document.createElement('p');
-    paragraph3.className ='statut'
+    paragraph3.className = 'statut'
     let paragraph4 = document.createElement('p');
+    paragraph4.className = 'date';
     let divBtn = document.createElement('div');
     let editBtn = document.createElement('button');
     let deletBtn = document.createElement('button');
@@ -50,8 +59,15 @@ const taskDiv = (task) => {
         deleteTask(task)
     })
     titleEle.style.backgroundColor = randomcol();
-    editBtn.textContent = 'Edit';
-    deletBtn.textContent = 'Delete';
+    editBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+    <title>Edit task</title>
+    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+</svg>`;
+    deletBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+    <title>Delete task</title>
+    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+</svg>`;
     divBtn.append(editBtn, deletBtn);
     //getting values from taskValues
     if (task.title === '' || task.priority === '' || task.statut === '' || task.date === '') {
@@ -72,6 +88,7 @@ const taskDiv = (task) => {
         addBtn.classList.add('hidden');
         saveBtn.classList.remove('hidden');
     });
+    checkIfTaskHolderIsEmpty()
 };
 const taskValues = () => {
     //getting values from the inputs
@@ -123,6 +140,7 @@ const deleteTask = (task) => {
     if (curId) {
         delete taskObj[curId];
         document.getElementById(curId).remove();
+        checkIfTaskHolderIsEmpty()
     } else {
         alert('we unable to find the task')
     }
@@ -154,7 +172,7 @@ function resetDisplay() {
     });
 }
 function filterTasks(status) {
-    resetDisplay(); 
+    resetDisplay();
     document.querySelectorAll('.statut').forEach((e) => {
         const taskStatus = e.innerText.trim().toLowerCase();
         if (taskStatus !== status.toLowerCase()) {
@@ -162,18 +180,84 @@ function filterTasks(status) {
         }
     });
 }
-
-function filterNon(status) {
-    document.querySelectorAll('.statut').forEach((e) => {
-        const taskStatus = e.innerText.trim().toLowerCase();
-        if (taskStatus !== status.toLowerCase()) {
-            e.parentElement.style.display = '';
-        }
-    });
-}
 catAll.addEventListener('click', resetDisplay);
 catComplete.addEventListener('click', () => filterTasks('Completed'));
 catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
 catInprogress.addEventListener('click', () => filterTasks('In progress'));
-console.log(VarDate);
+//creat date format in a container
+function displayDate() {
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+}
+document.getElementById("month").innerText = displayDate();
+//display date with names 
+let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function dateNames() {
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let dateName = `${months[month]}  ${year}`;
+    return dateName;
+}
+document.getElementById("month-year").innerText = dateNames();
+//creat live time display
+function timeDisplay() {
+    const date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let formatTime = `Time: ${hours}:${minutes}:${seconds}`;
+    return formatTime;
+}
+setInterval(() => {
+    document.getElementById("time").innerText = timeDisplay();
+}, 1000);
+// Function to check if notifications are allowed
+// Adjusting the requestNotificationPermission function
+async function requestNotificationPermission() {
+    if (Notification.permission === 'granted') {
+        return true;
+    } else if (Notification.permission !== 'denied') {
+        const permission = await Notification.requestPermission();
+        return permission === 'granted';
+    }
+    return false;
+}
 
+async function sendNotification(title, body) {
+    const permissionGranted = await requestNotificationPermission();
+    console.log('Permission Granted: ', permissionGranted);
+    if (permissionGranted) {
+        const notification = new Notification(title, { body: body });
+        notification.onclick = () => window.focus();
+        console.log('Notification sent:', title, body);
+    } else {
+        alert('Notification permission not granted please grant access to recieve notification about your tasks');
+    }
+}
+
+
+function notificationTask() {
+    const nowDate = new Date();
+    const formattedNowDate = `${nowDate.getFullYear()}-${(nowDate.getMonth() + 1).toString().padStart(2, '0')}-${nowDate.getDate().toString().padStart(2, '0')}`;
+    let notificationsSent = 0; // Counter for notifications
+
+    document.querySelectorAll('.date').forEach(taskDateElement => {
+        const taskDateText = taskDateElement.innerText.trim();
+        console.log(`Comparing: ${taskDateText} with ${formattedNowDate}`);
+        if (taskDateText === formattedNowDate) {
+            sendNotification('Your task time has come', 'You have a task scheduled for today!');
+            notificationsSent++;
+        }
+    });
+    
+
+}
+
+document.getElementById('notification').addEventListener('click', () => {
+    notificationTask();
+});

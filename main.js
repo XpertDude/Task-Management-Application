@@ -190,10 +190,10 @@ function displayDate() {
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    let formattedDate = `${year}-${month}-${day}`;
+    let formattedDate = `<p style="">${year}-${month}-${day}</p>`;
     return formattedDate;
 }
-document.getElementById("month").innerText = displayDate();
+document.getElementById("month").innerHTML = displayDate();
 //display date with names 
 let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 function dateNames() {
@@ -210,11 +210,11 @@ function timeDisplay() {
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
-    let formatTime = `Time: ${hours}:${minutes}:${seconds}`;
+    let formatTime = `<p style="border: 4px solid white;"><span>${hours}</span>:<span>${minutes}</span>:<span style="color:red;">${seconds}</span></p>`;
     return formatTime;
 }
 setInterval(() => {
-    document.getElementById("time").innerText = timeDisplay();
+    document.getElementById("time").innerHTML = timeDisplay();
 }, 1000);
 // Function to check if notifications are allowed
 // Adjusting the requestNotificationPermission function
@@ -234,30 +234,26 @@ async function sendNotification(title, body) {
     if (permissionGranted) {
         const notification = new Notification(title, { body: body });
         notification.onclick = () => window.focus();
-        console.log('Notification sent:', title, body);
     } else {
         alert('Notification permission not granted please grant access to recieve notification about your tasks');
     }
 }
+console.log(Object.keys(taskObj));
 
 
 function notificationTask() {
     const nowDate = new Date();
     const formattedNowDate = `${nowDate.getFullYear()}-${(nowDate.getMonth() + 1).toString().padStart(2, '0')}-${nowDate.getDate().toString().padStart(2, '0')}`;
-    let notificationsSent = 0; // Counter for notifications
+    let notificationsSent = 0;
 
-    document.querySelectorAll('.date').forEach(taskDateElement => {
-        const taskDateText = taskDateElement.innerText.trim();
-        console.log(`Comparing: ${taskDateText} with ${formattedNowDate}`);
+    Object.keys(taskObj).forEach(taskId => {
+        const obj = taskObj[taskId];
+        const taskDateText = obj.date;
         if (taskDateText === formattedNowDate) {
-            sendNotification('Your task time has come', 'You have a task scheduled for today!');
+            sendNotification(`Your task "${obj.title}" is scheduled for today!`);
             notificationsSent++;
         }
     });
-    
-
 }
-
-document.getElementById('notification').addEventListener('click', () => {
-    notificationTask();
-});
+setInterval(notificationTask, 60000);
+document.getElementById('notification').addEventListener('click', notificationTask);

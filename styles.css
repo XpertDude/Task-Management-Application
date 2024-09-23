@@ -201,15 +201,19 @@ main{
     color: red;
 }
 
+#month-year{
+    border-top: 6px solid blanchedalmond;
+}
+
 .motnth-time{
-    background-color: var(--back-color);
+    background-color: rgba(197, 73, 255, 0.651);
     border-radius: 3%;
     text-align: center;
+    padding: 0;
+    background-color: rgb(5, 38, 68);
+    color: #f7f3f3;
 }
 
-#month, #time{
-
-}
 
 .task h2{
     width: 200px;
@@ -223,7 +227,7 @@ main{
     width: 30%;
     height: 35%;
     padding: 10px;
-    background-color: brown;
+    background-color: rgb(5, 38, 68);
     border: none;
     transition: all 0.3s ease;
 }
@@ -239,7 +243,7 @@ main{
     gap: 20px;
     border: none;
     width: 100%;
-    background-color: brown;
+    background-color: rgb(5, 38, 68);
 }
 
 #input-task button{
@@ -247,7 +251,7 @@ main{
 }
 
 #input-task button:hover{
-    background-color: rgb(0, 40, 128);
+    background-color: rgb(5, 38, 68);
     color: bisque;
 }
 
@@ -261,7 +265,7 @@ main{
 }
 
 #exit-btn:hover{
-    color: rgb(0, 40, 128);
+    color: red;
 }
 #add-btn{
     position: absolute;

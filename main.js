@@ -184,6 +184,7 @@ catAll.addEventListener('click', resetDisplay);
 catComplete.addEventListener('click', () => filterTasks('Completed'));
 catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
 catInprogress.addEventListener('click', () => filterTasks('In progress'));
+<<<<<<< HEAD
 //creat date format in a container
 function displayDate() {
     let date = new Date();
@@ -227,6 +228,8 @@ async function requestNotificationPermission() {
     }
     return false;
 }
+=======
+>>>>>>> cce76e1b8434f4cc06129119cd1703764557c207
 
 async function sendNotification(title, body) {
     const permissionGranted = await requestNotificationPermission();

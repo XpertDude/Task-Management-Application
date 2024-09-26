@@ -9,8 +9,9 @@ html, body{
     background-color: #f7f3f3;
 }
 :root{
-    --maine-color:  goldenrod;
+    --maine-color:  #1a1530;
     --back-color: #f8683d;
+    --hover: #ffd78c;
 }
 /*nav bar styling start*/
 a{
@@ -29,7 +30,7 @@ nav{
     justify-content: space-evenly;
     align-items: center;
     gap: 10px;
-    background-color: rgb(5, 38, 68);
+    background-color:#0a061f;
     color: beige;
 }
 
@@ -47,7 +48,9 @@ nav ul a{
 }
 
 nav ul a:hover{
-    color: var(--back-color);
+    color: black;
+    background-color: var(--hover);
+    box-shadow: 0 1px 3px 1px var(--hover);
 }
 
 /*nav bar styling end*/
@@ -58,18 +61,27 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: var(--maine-color);
+    color: beige;
 }
 
 .add-search{
     width: 90%;
-    display: grid;
-    grid-template-columns: 1fr 50px 50px;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
 }
 
-.add-search #add-task, #notification{
+#add-task{
+    background-color: #8a70ff;
+    padding: 10px;
+    cursor: pointer;
+    font-size: small;
+    border-radius: 5%;
+}
+
+.add-search #notification{
     padding: 0;
     margin: 0;
     border: none;
@@ -79,6 +91,16 @@ main{
     transition: all 0.3s ease;
 }
 
+#search-bar{
+    background-color: #292344;
+    padding: 5px;
+    color: beige;
+    transition: all 0.3s ease-in-out;
+}
+
+#search-bar:hover{
+    box-shadow: 0 1px 3px 1px var(--hover);
+}
 
 .cat-holder{
     display: flex;
@@ -87,18 +109,19 @@ main{
 .cat-holder p{
     margin-left: 10px;
     padding: 2px;
-    cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 5%;
 }
 
-.cat-holder p:hover{
-    background-color: rgb(0, 40, 128);
-    color: aliceblue;
+.cat-holder #all:hover, #complet:hover, #uncomplet:hover, #in-progress:hover{
+    cursor: pointer;
+    color: black;
+    background-color: var(--hover);
+    box-shadow: 0 1px 3px 1px var(--hover);
 }
 
 #add-task:hover, #notification:hover{
-    color: brown;
+    color: var(--hover);
 }
 
 .add-search .search-bar{
@@ -128,20 +151,20 @@ main{
 .tasks-container{
     grid-column: 1 / -2;
     display: grid;
-    grid-template-columns: repeat(3, 250px);
+    grid-template-columns: 1fr;
     grid-template-rows: max-content;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    width: 100%;
-    height: 100%;
     padding: 20px;
     margin: 10px;
+    height: 400px;
+    overflow: auto;
 }
 
 .display-items{
     display: grid;
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 700px 400px;
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
@@ -152,18 +175,19 @@ main{
 .motnth-time{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .task{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 200px;
+    width: 100%;
     gap: 2px;
-    font-size: x-small;
-    box-shadow: 0 0 6px rgb(5, 38, 68);
+    font-size: 11px;
+    background-color: #27223d;
 }
 
 .task div{
@@ -173,8 +197,9 @@ main{
     align-items: center;
 }
 
-.task h2{
+.task div h2{
     width: 100%;
+    color: black;
 }
 
 .hidden{
@@ -182,7 +207,7 @@ main{
 }
 
 .task div button{
-    background-color: none;
+    background: none;
     font-size: small;
     border: none;
     cursor: pointer;
@@ -206,15 +231,27 @@ main{
 }
 
 .motnth-time{
-    background-color: rgba(197, 73, 255, 0.651);
     border-radius: 3%;
     text-align: center;
+    height: auto;
     padding: 0;
-    background-color: rgb(5, 38, 68);
     color: #f7f3f3;
 }
 
-
+#time{
+    position: absolute;
+    border: none;
+    width: 90px;
+    top: 65px;
+    right: 2px;
+    background-color: #8a70ff;
+    padding: 10px;
+    border-radius: 2%;
+}
+#calendar{
+    width: 100%;
+    height: 100%;
+}
 .task h2{
     width: 200px;
     height: auto;

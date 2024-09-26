@@ -9,9 +9,14 @@ const saveBtn = document.getElementById('save-btn');
 const cancelBtn = document.getElementById('cancel-btn');
 const alertdialog = document.getElementById('alert-dialog');
 const alertMessage = document.getElementById('alert');
+let numberTasks = document.getElementById('number-tasks');
 //creatin object and id tracker to handle the nested objects
 let taskObj = {};
 let curId = null;
+//creating function displaying numberTasks
+setInterval(() => {
+    numberTasks.innerHTML = `Tasks: <span style='color: yellow;'>${Object.keys(taskObj).length}</span>`;
+}, 100)
 const taskObject = (title, priority, statut, date) => {
     return {
         id: `${title.toLowerCase().split(" ").join("-")}-${Date.now()}`,
@@ -47,11 +52,16 @@ const taskDiv = (task) => {
     let taskEle = document.createElement('div');
     taskEle.className = 'task';
     let titleEle = document.createElement('h2');
+    let titlediv = document.createElement('div');
+    titlediv.appendChild(titleEle);
     let paragraph2 = document.createElement('p');
     let paragraph3 = document.createElement('p');
-    paragraph3.className = 'statut'
+    paragraph3.className = 'statut';
     let paragraph4 = document.createElement('p');
+    paragraph4.style.color = 'red';
     paragraph4.className = 'date';
+    let paragDiv = document.createElement('div');
+    paragDiv.append(paragraph2, paragraph3, paragraph4)
     let divBtn = document.createElement('div');
     let editBtn = document.createElement('button');
     let deletBtn = document.createElement('button');
@@ -79,10 +89,16 @@ const taskDiv = (task) => {
         paragraph2.innerText = task.priority;
         paragraph3.textContent = task.statut;
         paragraph4.textContent = task.date;
-        taskEle.append(titleEle, paragraph2, paragraph3, paragraph4, divBtn);
+        taskEle.append(titlediv, paragDiv, divBtn);
         taskHolder.appendChild(taskEle);
         closeDialog();
     }
+    if (paragraph3.innerText.trim().toLowerCase() === 'completed') {
+        paragraph3.style.color = 'green';
+    } else {
+        paragraph3.style.color = '';
+    }
+    
     editBtn.addEventListener('click', () => {
         editTask(task);
         addBtn.classList.add('hidden');
@@ -94,7 +110,7 @@ const taskValues = () => {
     //getting values from the inputs
     let priority = document.getElementById('priority').value;
     let statut = document.getElementById('statut').value;
-    let title = document.getElementById('title').value;
+    let title = document.getElementById('title').value.trim();
     let date = document.getElementById('date').value;
     //add task to the task object
     const task = taskObject(title, priority, statut, date);
@@ -111,6 +127,7 @@ const editTask = (task) => {
     document.getElementById('statut').value = obj.statut;
     document.getElementById('date').value = obj.date;
     openDialog()
+    document.getElementById('title-dialog').innerText ='Edit your task'
 };
 
 function saveTask() {
@@ -168,15 +185,17 @@ const catInprogress = document.getElementById('in-progress');
 const catAll = document.getElementById('all');
 function resetDisplay() {
     document.querySelectorAll('.statut').forEach((e) => {
-        e.parentElement.style.display = '';
+        const parentElement = e.parentElement.parentElement;
+        parentElement.style.display = '';
     });
 }
 function filterTasks(status) {
     resetDisplay();
     document.querySelectorAll('.statut').forEach((e) => {
         const taskStatus = e.innerText.trim().toLowerCase();
+        const parentElement = e.parentElement.parentElement;
         if (taskStatus !== status.toLowerCase()) {
-            e.parentElement.style.display = 'none';
+            parentElement.style.display = 'none';
         }
     });
 }
@@ -184,41 +203,32 @@ catAll.addEventListener('click', resetDisplay);
 catComplete.addEventListener('click', () => filterTasks('Completed'));
 catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
 catInprogress.addEventListener('click', () => filterTasks('In progress'));
-<<<<<<< HEAD
 //creat date format in a container
 function displayDate() {
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    let formattedDate = `<p style="">${year}-${month}-${day}</p>`;
+    let formattedDate = `<p style="">Today: ${year}-${month}-${day}</p>`;
     return formattedDate;
 }
 document.getElementById("month").innerHTML = displayDate();
-//display date with names 
-let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-function dateNames() {
-    let date = new Date();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let dateName = `${months[month]}  ${year}`;
-    return dateName;
-}
-document.getElementById("month-year").innerText = dateNames();
 //creat live time display
 function timeDisplay() {
     const date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
-    let formatTime = `<p style="border: 4px solid white;"><span>${hours}</span>:<span>${minutes}</span>:<span style="color:red;">${seconds}</span></p>`;
+    let formatTime = `<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alarm" viewBox="0 0 16 16">
+  <path d="M8.5 5.5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9z"/>
+  <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07a7.001 7.001 0 0 0-3.273 12.474l-.602.602a.5.5 0 0 0 .707.708l.746-.746A6.97 6.97 0 0 0 8 16a6.97 6.97 0 0 0 3.422-.892l.746.746a.5.5 0 0 0 .707-.708l-.601-.602A7.001 7.001 0 0 0 9 2.07V1h.5a.5.5 0 0 0 0-1zm1.038 3.018a6 6 0 0 1 .924 0 6 6 0 1 1-.924 0M0 3.5c0 .753.333 1.429.86 1.887A8.04 8.04 0 0 1 4.387 1.86 2.5 2.5 0 0 0 0 3.5M13.5 1c-.753 0-1.429.333-1.887.86a8.04 8.04 0 0 1 3.527 3.527A2.5 2.5 0 0 0 13.5 1"/>
+</svg></span>  <span>${hours}</span>:<span>${minutes}</span>:<span style="color:yellow;">${seconds}</span>`;
     return formatTime;
 }
 setInterval(() => {
     document.getElementById("time").innerHTML = timeDisplay();
 }, 1000);
 // Function to check if notifications are allowed
-// Adjusting the requestNotificationPermission function
 async function requestNotificationPermission() {
     if (Notification.permission === 'granted') {
         return true;
@@ -228,8 +238,6 @@ async function requestNotificationPermission() {
     }
     return false;
 }
-=======
->>>>>>> cce76e1b8434f4cc06129119cd1703764557c207
 
 async function sendNotification(title, body) {
     const permissionGranted = await requestNotificationPermission();
@@ -252,11 +260,22 @@ function notificationTask() {
     Object.keys(taskObj).forEach(taskId => {
         const obj = taskObj[taskId];
         const taskDateText = obj.date;
+        if (taskDateText === formattedNowDate && obj.statut === 'Completed') {
+            return;
+        }
         if (taskDateText === formattedNowDate) {
             sendNotification(`Your task "${obj.title}" is scheduled for today!`);
             notificationsSent++;
         }
     });
 }
-setInterval(notificationTask, 60000);
+setInterval(notificationTask, 2000000);
 document.getElementById('notification').addEventListener('click', notificationTask);
+//generating calendar
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar')
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+    })
+    calendar.render()
+})

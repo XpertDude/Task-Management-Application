@@ -92,10 +92,15 @@ main{
 }
 
 #search-bar{
+    position: relative;
     background-color: #292344;
     padding: 5px;
     color: beige;
     transition: all 0.3s ease-in-out;
+}
+
+#search{
+    cursor: pointer;
 }
 
 #search-bar:hover{

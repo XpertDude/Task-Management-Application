@@ -52,6 +52,7 @@ const taskDiv = (task) => {
     let taskEle = document.createElement('div');
     taskEle.className = 'task';
     let titleEle = document.createElement('h2');
+    titleEle.className = 'task-name';
     let titlediv = document.createElement('div');
     titlediv.appendChild(titleEle);
     let paragraph2 = document.createElement('p');
@@ -249,8 +250,6 @@ async function sendNotification(title, body) {
         alert('Notification permission not granted please grant access to recieve notification about your tasks');
     }
 }
-console.log(Object.keys(taskObj));
-
 
 function notificationTask() {
     const nowDate = new Date();
@@ -279,3 +278,21 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     calendar.render()
 })
+
+//creating function to handle search input
+function filterByTitle(title) {
+    resetDisplay(); 
+    const searchTitle = title.trim().toLowerCase();
+    document.querySelectorAll('.task-name').forEach((e) => {
+        const taskName = e.innerText.trim().toLowerCase();
+        const parentElement = e.parentElement.parentElement;
+        if (!taskName.includes(searchTitle)) {
+            parentElement.style.display = 'none';
+        } else {
+            parentElement.style.display = '';
+        }
+    });
+}
+document.getElementById('search-bar').addEventListener('input', (e) => {
+    filterByTitle(e.target.value);
+});

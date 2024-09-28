@@ -26,6 +26,27 @@ const taskObject = (title, priority, statut, date) => {
         date: date
     };
 }
+// Handling tasks saving on localStorage
+const savtaskToLocalStorage = () => {
+    try {
+        localStorage.setItem('tasks', JSON.stringify(taskObj));
+    } catch (error) {
+        console.error('Error saving tasks to localStorage:', error);
+    }
+}
+
+// Handling getting tasks from localStorage
+const getTasksFromLocalStorage = () => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+        taskObj = JSON.parse(storedTasks);
+        console.log('Retrieved tasks:', taskObj); // Log retrieved tasks
+        Object.keys(taskObj).forEach((id) => {
+            taskDiv(taskObj[id]);
+        });
+    }
+}
+
 //creating random color generator
 let color = '5A1CE68A23F';
 
@@ -108,16 +129,18 @@ const taskDiv = (task) => {
     checkIfTaskHolderIsEmpty()
 };
 const taskValues = () => {
-    //getting values from the inputs
+    // Getting values from the inputs
     let priority = document.getElementById('priority').value;
     let statut = document.getElementById('statut').value;
     let title = document.getElementById('title').value.trim();
     let date = document.getElementById('date').value;
-    //add task to the task object
+    // Add task to the task object
     const task = taskObject(title, priority, statut, date);
     taskObj[task.id] = task;
     taskDiv(task);
+    savtaskToLocalStorage(); // Call this to store the task in localStorage
 }
+
 creatTask.addEventListener('click', taskValues);
 //handling edit and delet buttons
 const editTask = (task) => {
@@ -145,11 +168,12 @@ function saveTask() {
     if (curObject.title === '' || curObject.priority === '' || curObject.statut === '' || curObject.date === '') {
         alert('please fill up the form correctly')
         return;
-    } else {
+    } else{
         titleTask.innerText = curObject.title;
         priorityTask.innerText = curObject.priority;
         statutTask.innerText = curObject.statut;
         dateTask.innerText = curObject.date;
+        savtaskToLocalStorage();
     }
     closeDialog();
 }
@@ -162,6 +186,7 @@ const deleteTask = (task) => {
     } else {
         alert('we unable to find the task')
     }
+    savtaskToLocalStorage();
 };
 saveBtn.addEventListener('click', saveTask)
 cancelBtn.addEventListener('click', closeDialog)
@@ -200,6 +225,13 @@ function filterTasks(status) {
         }
     });
 }
+const items = document.querySelectorAll('.cat-holder > p');
+items.forEach(item => {
+    item.addEventListener('click', () => {
+        items.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+    });
+});
 catAll.addEventListener('click', resetDisplay);
 catComplete.addEventListener('click', () => filterTasks('Completed'));
 catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
@@ -296,3 +328,7 @@ function filterByTitle(title) {
 document.getElementById('search-bar').addEventListener('input', (e) => {
     filterByTitle(e.target.value);
 });
+//getting tasks from localStorage when dom loads
+document.addEventListener('DOMContentLoaded', () => {
+    getTasksFromLocalStorage();
+})

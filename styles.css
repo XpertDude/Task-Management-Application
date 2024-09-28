@@ -109,6 +109,8 @@ main{
 
 .cat-holder{
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .cat-holder p{
@@ -116,6 +118,10 @@ main{
     padding: 2px;
     transition: all 0.3s ease;
     border-radius: 5%;
+}
+
+.cat-holder .active {
+    color: var(--hover);
 }
 
 .cat-holder #all:hover, #complet:hover, #uncomplet:hover, #in-progress:hover{

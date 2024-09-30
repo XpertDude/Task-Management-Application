@@ -18,7 +18,7 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="tasks.html">Tasks</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
@@ -44,6 +44,9 @@
             </div>
             <div id="add-task">
                 Add New Task
+            </div>
+            <div id="clear-tasks">
+                Clear all tasks
             </div>
             <div id="notification">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
@@ -84,7 +87,10 @@
             <div class="motnth-time">
                 <div id='calendar'></div>    
             </div>
-            
+            <dialog id="message">
+                <p id="error-message"></p>
+                <button type="button" id="btn-Close-Error">Ok</button>
+            </dialog>
         </section>
     </main>
     <script src="main.js"></script>

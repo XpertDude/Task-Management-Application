@@ -7,9 +7,10 @@ const formInputs = document.getElementById('form');
 const addBtn = document.getElementById('add-btn');
 const saveBtn = document.getElementById('save-btn');
 const cancelBtn = document.getElementById('cancel-btn');
-const alertdialog = document.getElementById('alert-dialog');
-const alertMessage = document.getElementById('alert');
 let numberTasks = document.getElementById('number-tasks');
+const errorDialog = document.getElementById('message');
+const closeErrorMessage = document.getElementById('btn-Close-Error');
+let messageContent = document.getElementById('error-message');
 //creatin object and id tracker to handle the nested objects
 let taskObj = {};
 let curId = null;
@@ -31,16 +32,13 @@ const savtaskToLocalStorage = () => {
     try {
         localStorage.setItem('tasks', JSON.stringify(taskObj));
     } catch (error) {
-        console.error('Error saving tasks to localStorage:', error);
     }
 }
-
 // Handling getting tasks from localStorage
 const getTasksFromLocalStorage = () => {
     const storedTasks = localStorage.getItem('tasks');
     if (storedTasks) {
         taskObj = JSON.parse(storedTasks);
-        console.log('Retrieved tasks:', taskObj); // Log retrieved tasks
         Object.keys(taskObj).forEach((id) => {
             taskDiv(taskObj[id]);
         });
@@ -103,43 +101,54 @@ const taskDiv = (task) => {
     divBtn.append(editBtn, deletBtn);
     //getting values from taskValues
     if (task.title === '' || task.priority === '' || task.statut === '' || task.date === '') {
-        alert('please fill up the form correctly');
+        errorDialog.showModal();
+        messageContent.innerHTML = `Please fill in the fields`;
         return;
-    } else {
-        taskEle.id = task.id;
-        titleEle.innerText = task.title;
-        paragraph2.innerText = task.priority;
-        paragraph3.textContent = task.statut;
-        paragraph4.textContent = task.date;
-        taskEle.append(titlediv, paragDiv, divBtn);
-        taskHolder.appendChild(taskEle);
-        closeDialog();
     }
+    taskEle.id = task.id;
+    titleEle.innerText = task.title;
+    paragraph2.innerText = task.priority;
+    paragraph3.textContent = task.statut;
+    paragraph4.textContent = task.date;
+    taskEle.append(titlediv, paragDiv, divBtn);
+    taskHolder.appendChild(taskEle);
+    closeDialog();
     if (paragraph3.innerText.trim().toLowerCase() === 'completed') {
         paragraph3.style.color = 'green';
     } else {
         paragraph3.style.color = '';
     }
-    
     editBtn.addEventListener('click', () => {
         editTask(task);
         addBtn.classList.add('hidden');
         saveBtn.classList.remove('hidden');
     });
-    checkIfTaskHolderIsEmpty()
+
 };
 const taskValues = () => {
     // Getting values from the inputs
-    let priority = document.getElementById('priority').value;
-    let statut = document.getElementById('statut').value;
+    let priority = document.getElementById('priority').value.trim();
+    let statut = document.getElementById('statut').value.trim();
     let title = document.getElementById('title').value.trim();
-    let date = document.getElementById('date').value;
-    // Add task to the task object
-    const task = taskObject(title, priority, statut, date);
-    taskObj[task.id] = task;
-    taskDiv(task);
-    savtaskToLocalStorage(); // Call this to store the task in localStorage
+    let date = document.getElementById('date').value.trim();
+    const titleRegex = /^[a-zA-Z0-9\s]+$/;
+    if (!titleRegex.test(title)){
+        errorDialog.showModal();
+        messageContent.innerHTML = `Your title <span style='color: #ffd78c;'>${title}</span> not valid <br> Symbols not allowed`;
+        if (title === '' || priority === '' || statut === '' || date === '') {
+            errorDialog.showModal();
+            messageContent.innerHTML = `Please fill in the fields`;
+            return;
+        }
+    }else {
+        // Add task to the task object
+        const task = taskObject(title, priority, statut, date);
+        taskObj[task.id] = task;
+        taskDiv(task);
+        savtaskToLocalStorage(); 
 }
+    }
+    
 
 creatTask.addEventListener('click', taskValues);
 //handling edit and delet buttons
@@ -166,15 +175,15 @@ function saveTask() {
     const statutTask = updatedTask.querySelector('p:nth-of-type(2)');
     const dateTask = updatedTask.querySelector('p:nth-of-type(3)');
     if (curObject.title === '' || curObject.priority === '' || curObject.statut === '' || curObject.date === '') {
-        alert('please fill up the form correctly')
+        errorDialog.showModal();
+        messageContent.innerHTML = `please fill up the form correctly`;
         return;
-    } else{
-        titleTask.innerText = curObject.title;
-        priorityTask.innerText = curObject.priority;
-        statutTask.innerText = curObject.statut;
-        dateTask.innerText = curObject.date;
-        savtaskToLocalStorage();
     }
+    titleTask.innerText = curObject.title;
+    priorityTask.innerText = curObject.priority;
+    statutTask.innerText = curObject.statut;
+    dateTask.innerText = curObject.date;
+    savtaskToLocalStorage();
     closeDialog();
 }
 const deleteTask = (task) => {
@@ -274,7 +283,6 @@ async function requestNotificationPermission() {
 
 async function sendNotification(title, body) {
     const permissionGranted = await requestNotificationPermission();
-    console.log('Permission Granted: ', permissionGranted);
     if (permissionGranted) {
         const notification = new Notification(title, { body: body });
         notification.onclick = () => window.focus();
@@ -328,6 +336,10 @@ function filterByTitle(title) {
 document.getElementById('search-bar').addEventListener('input', (e) => {
     filterByTitle(e.target.value);
 });
+closeErrorMessage.addEventListener('click', () => {
+    errorDialog.close();
+    messageContent.innerHTML = '';
+})
 //getting tasks from localStorage when dom loads
 document.addEventListener('DOMContentLoaded', () => {
     getTasksFromLocalStorage();

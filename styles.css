@@ -12,6 +12,9 @@ html, body{
     --maine-color:  #1a1530;
     --back-color: #f8683d;
     --hover: #ffd78c;
+    --text-color: beige;
+    --nav-color: #0a061f;
+    --button-color:#8a70ff;
 }
 /*nav bar styling start*/
 a{
@@ -19,9 +22,14 @@ a{
 }
 
 h1 a{
-    color: beige;
+    color: var(--text-color);
 }
-
+.dark-mode{
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    z-index: 20;
+}
 .home{
     display: grid;
     grid-template-columns: auto 200px;
@@ -43,7 +51,7 @@ h1 a{
 }
 
 .link a{
-    color: white;
+    color: var(--text-color);
 }
 
 .link a:hover{
@@ -68,8 +76,8 @@ nav{
     justify-content: space-evenly;
     align-items: center;
     gap: 10px;
-    background-color:#0a061f;
-    color: beige;
+    background-color:var(--nav-color);
+    color: var(--text-color);
 }
 
 nav ul{
@@ -79,7 +87,7 @@ nav ul{
 }
 
 nav ul a{
-    color: beige;
+    color: var(--text-color);
     padding: 2px;
     border-radius: 10%;
     transition: all 0.3s ease;
@@ -100,7 +108,7 @@ main{
     justify-content: center;
     align-items: center;
     background-color: var(--maine-color);
-    color: beige;
+    color: var(--text-color);
 }
 
 .add-search{
@@ -112,7 +120,7 @@ main{
 }
 
 #add-task , #clear-tasks{
-    background-color: #8a70ff;
+    background-color: var(--button-color);
     padding: 10px;
     cursor: pointer;
     font-size: small;
@@ -133,7 +141,7 @@ main{
     position: relative;
     background-color: #292344;
     padding: 5px;
-    color: beige;
+    color: var(--text-color);
     transition: all 0.3s ease-in-out;
 }
 
@@ -213,7 +221,7 @@ main{
 
 .display-items{
     display: grid;
-    grid-template-columns: 700px 400px;
+    grid-template-columns: 50% 30%;
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
@@ -284,12 +292,12 @@ main{
     text-align: center;
     height: auto;
     padding: 0;
-    color: #f7f3f3;
+    color: var(--text-color);
 }
 
 #message{
     background-color: var(--maine-color);
-    color: white;
+    color: var(--text-color);
     text-align: center;
 }
 
@@ -310,7 +318,7 @@ main{
     width: 90px;
     top: 150px;
     right: 0;
-    background-color: #8a70ff;
+    background-color: var(--button-color);
     padding: 10px;
     border-radius: 2%;
 }
@@ -355,7 +363,7 @@ main{
 
 #input-task button:hover{
     background-color: rgb(5, 38, 68);
-    color: bisque;
+    color: var(--text-color);
 }
 
 #exit-btn{
@@ -363,7 +371,7 @@ main{
     top: 0;
     right: 0;
     cursor: pointer;
-    color: beige;
+    color: var(--text-color);
     transition: 0.3s ease-in-out;
 }
 
@@ -376,7 +384,7 @@ main{
     left: 0;
     margin: 5px;
     width: 60px;
-    background-color: beige;
+    background-color: var(--text-color);
     border: none;
     padding: 5px;
     cursor: pointer;
@@ -388,7 +396,7 @@ main{
     left: 0;
     margin: 5px;
     width: 60px;
-    background-color: beige;
+    background-color: var(--text-color);
     border: none;
     padding: 5px;
     cursor: pointer;
@@ -400,7 +408,7 @@ main{
     right: 0;
     margin: 5px;
     width: 60px;
-    background-color: beige;
+    background-color: var(--text-color);
     border: none;
     padding: 5px;
     cursor: pointer;

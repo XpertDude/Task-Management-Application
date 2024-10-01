@@ -11,12 +11,16 @@ let numberTasks = document.getElementById('number-tasks');
 const errorDialog = document.getElementById('message');
 const closeErrorMessage = document.getElementById('btn-Close-Error');
 let messageContent = document.getElementById('error-message');
+const clearAllTasks = document.getElementById('clear-tasks');
 //creatin object and id tracker to handle the nested objects
 let taskObj = {};
 let curId = null;
 //creating function displaying numberTasks
-setInterval(() => {
+function updateTaskNumber() {
     numberTasks.innerHTML = `Tasks: <span style='color: yellow;'>${Object.keys(taskObj).length}</span>`;
+}
+setInterval(() => {
+    updateTaskNumber();
 }, 100)
 const taskObject = (title, priority, statut, date) => {
     return {
@@ -49,13 +53,12 @@ const getTasksFromLocalStorage = () => {
 let color = '5A1CE68A23F';
 
 function randomcol() {
-    const hex = '#'; // Start with a #
-    let newColor = ''; // Initialize an empty string to build the color
-    for (let i = 0; i < 6; i++) { // Loop 6 times for a valid hex color
-        const randomNum = Math.floor(Math.random() * color.length); // Generate a random index
-        newColor += color[randomNum]; // Append the random character to newColor
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
     }
-    return hex + newColor; // Return the full hex color
+    return color;
 }
 //checking if task holder is emty
 function checkIfTaskHolderIsEmpty() {
@@ -137,7 +140,7 @@ const taskValues = () => {
         messageContent.innerHTML = `Your title <span style='color: #ffd78c;'>${title}</span> not valid <br> Symbols not allowed`;
         if (title === '' || priority === '' || statut === '' || date === '') {
             errorDialog.showModal();
-            messageContent.innerHTML = `Please fill in the fields`;
+            messageContent.innerHTML = `Please fill in all the fields`;
             return;
         }
     }else {
@@ -162,7 +165,6 @@ const editTask = (task) => {
     openDialog()
     document.getElementById('title-dialog').innerText ='Edit your task'
 };
-
 function saveTask() {
     const curObject = taskObj[curId];
     curObject.title = document.getElementById('title').value;
@@ -188,12 +190,15 @@ function saveTask() {
 }
 const deleteTask = (task) => {
     curId = task.id;
-    if (curId) {
+    const confirmDelete = confirm(`You will delete your task "${taskObj[curId].title}"`)
+    if (curId && confirmDelete) {
         delete taskObj[curId];
         document.getElementById(curId).remove();
         checkIfTaskHolderIsEmpty()
-    } else {
-        alert('we unable to find the task')
+    }
+    if (!curId) {
+        errorDialog.showModal();
+        messageContent.innerHTML = `We enable to finde item`;
     }
     savtaskToLocalStorage();
 };
@@ -287,7 +292,8 @@ async function sendNotification(title, body) {
         const notification = new Notification(title, { body: body });
         notification.onclick = () => window.focus();
     } else {
-        alert('Notification permission not granted please grant access to recieve notification about your tasks');
+        errorDialog.showModal();
+        messageContent.innerHTML = `Notification permission not granted <br>please grant access to recieve notification about your tasks`;  
     }
 }
 
@@ -310,15 +316,6 @@ function notificationTask() {
 }
 setInterval(notificationTask, 2000000);
 document.getElementById('notification').addEventListener('click', notificationTask);
-//generating calendar
-document.addEventListener('DOMContentLoaded', function () {
-    const calendarEl = document.getElementById('calendar')
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth'
-    })
-    calendar.render()
-})
-
 //creating function to handle search input
 function filterByTitle(title) {
     resetDisplay(); 
@@ -344,3 +341,19 @@ closeErrorMessage.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     getTasksFromLocalStorage();
 })
+clearAllTasks.addEventListener('click', () => {
+    if (Object.keys(taskObj).length === 0) {
+        errorDialog.showModal();
+        messageContent.innerHTML = 'The task holder is empty';
+    }
+    const confirmMessage = confirm(`Are you sure you want to clear all tasks`);
+    if (Object.keys(taskObj).length > 0 && confirmMessage) {
+        localStorage.clear();
+        taskHolder.innerHTML = '';
+        errorDialog.showModal();
+        messageContent.innerHTML = `Your tasks are all cleared!<br> Tasks cleared: ${Object.keys(taskObj).length}`;
+            closeErrorMessage.addEventListener('click', () => {
+            window.location.reload();
+        })
+    }
+});

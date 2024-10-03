@@ -8,6 +8,19 @@ html, body{
     box-sizing: border-box;
     background-color: var(--maine-color);
 }
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--maine-color); /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--nav-color); /* Scrollbar color */
+}
+*{
+    transition: all 0.2s ease-in-out;
+}
 :root{
     --maine-color:  #1a1530;
     --back-color: #f8683d;
@@ -37,6 +50,7 @@ h1 a{
     align-items: center;
     gap: 100px;
     padding: 20px;
+    margin: 0;
     margin-top: 100px;
 }
 
@@ -90,7 +104,6 @@ nav ul a{
     color: var(--text-color);
     padding: 2px;
     border-radius: 10%;
-    transition: all 0.3s ease;
 }
 
 nav ul a:hover{
@@ -134,7 +147,6 @@ main{
     cursor: pointer;
     color: var(--maine-color);
     color: black;
-    transition: all 0.3s ease;
 }
 
 #search-bar{
@@ -142,7 +154,6 @@ main{
     background-color: #292344;
     padding: 5px;
     color: var(--text-color);
-    transition: all 0.3s ease-in-out;
 }
 
 #search{
@@ -162,7 +173,6 @@ main{
 .cat-holder p{
     margin-left: 10px;
     padding: 2px;
-    transition: all 0.3s ease;
     border-radius: 5%;
 }
 
@@ -244,7 +254,7 @@ main{
     width: 100%;
     gap: 2px;
     font-size: 11px;
-    background-color: #27223d;
+    background-color:#292344;
 }
 
 .task div{
@@ -271,15 +281,13 @@ main{
     padding: 5px;
     width: 20%;
     border-radius: 5%;
-    transition: 0.2s ease;
+    transition: none;
 }
 
 .task div button:nth-child(1):hover{
-    transform: scale(1.05);
     color: blue;
 }
 .task div button:nth-child(2):hover{
-    transform: scale(1.05);
     color: red;
 }
 
@@ -340,7 +348,6 @@ main{
     padding: 10px;
     background-color: rgb(5, 38, 68);
     border: none;
-    transition: all 0.3s ease;
 }
 #input-task input, select{
     width: 60%;
@@ -357,9 +364,6 @@ main{
     background-color: rgb(5, 38, 68);
 }
 
-#input-task button{
-    transition: all 0.3s ease-in-out;
-}
 
 #input-task button:hover{
     background-color: rgb(5, 38, 68);
@@ -372,7 +376,6 @@ main{
     right: 0;
     cursor: pointer;
     color: var(--text-color);
-    transition: 0.3s ease-in-out;
 }
 
 #exit-btn:hover{
@@ -414,3 +417,19 @@ main{
     cursor: pointer;
 }
 /*tasks styling end*/
+/*styling for dark mode*/
+.nav-style{
+    background-color: dodgerblue;
+}
+.main-style{
+    background-color: deepskyblue;
+}
+.body-style{
+    background-color: deepskyblue;
+}
+.button-style{
+    background-color: #3f2ee3;
+}
+.task-style{
+    background-color: dodgerblue;
+}

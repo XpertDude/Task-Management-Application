@@ -28,7 +28,7 @@ const darkMode = () => {
     } else {
         if (buttons) {
             buttons.forEach(btn => {
-                btn.classList.remove('button-style');  
+                btn.classList.remove('button-style'); 
             });
         } else {
             console.log('not found');

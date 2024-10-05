@@ -133,8 +133,8 @@ const taskDiv = (task) => {
 
     if (paragraph3.innerText.trim().toLowerCase() === 'completed') {
         paragraph3.style.color = 'green';
-    } else {
-        paragraph3.style.color = '';
+    } else{
+        paragraph3.style.color = 'white';
     }
 
     // Apply dark mode styles to the task if dark mode is enabled
@@ -149,6 +149,7 @@ const taskDiv = (task) => {
         addBtn.classList.add('hidden');
         saveBtn.classList.remove('hidden');
     });
+    checkIfTaskHolderIsEmpty()
 };
 
 const taskValues = () => {
@@ -169,7 +170,13 @@ const taskValues = () => {
     }else {
         // Add task to the task object
         const task = taskObject(title, priority, statut, date);
-        taskObj[task.id] = task;
+        if (task.title === '' || task.priority === '' || task.statut === '' || task.date === '') {
+            errorDialog.showModal();
+            messageContent.innerHTML = `Please fill in all the fields`;
+            return;
+        }else{
+            taskObj[task.id] = task;
+        }
         taskDiv(task);
         savtaskToLocalStorage(); 
 }
@@ -208,6 +215,11 @@ function saveTask() {
     priorityTask.innerText = curObject.priority;
     statutTask.innerText = curObject.statut;
     dateTask.innerText = curObject.date;
+    if (statutTask.innerText.trim().toLowerCase() === 'completed') {
+        statutTask.style.color = 'green';
+    }else{
+        statutTask.style.color = 'white';
+    }
     savtaskToLocalStorage();
     closeDialog();
 }

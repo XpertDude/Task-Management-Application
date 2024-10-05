@@ -19,7 +19,7 @@ html, body{
     background: var(--nav-color); /* Scrollbar color */
 }
 *{
-    transition: all 0.2s ease-in-out;
+    transition: all 0.04s ease-in-out;
 }
 :root{
     --maine-color:  #1a1530;
@@ -281,7 +281,6 @@ main{
     padding: 5px;
     width: 20%;
     border-radius: 5%;
-    transition: none;
 }
 
 .task div button:nth-child(1):hover{
@@ -420,16 +419,21 @@ main{
 /*styling for dark mode*/
 .nav-style{
     background-color: dodgerblue;
+    color: black;
 }
 .main-style{
     background-color: deepskyblue;
+    color: black;
 }
 .body-style{
     background-color: deepskyblue;
+    color: black;
 }
 .button-style{
+    color: black;
     background-color: #3f2ee3;
 }
 .task-style{
     background-color: dodgerblue;
+    color: black;
 }

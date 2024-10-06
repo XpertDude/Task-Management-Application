@@ -138,9 +138,9 @@ const taskDiv = (task) => {
     }
 
     // Apply dark mode styles to the task if dark mode is enabled
-    if (style === 'added') {
+    if (style === 'enabled') {
         taskEle.classList.add('task-style');
-    } else if (style === 'removed') {
+    } else if (style === 'disabled') {
         taskEle.classList.remove('task-style');
     }
 

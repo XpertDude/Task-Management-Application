@@ -29,19 +29,11 @@
         </span>
     </nav>
     <main>
+        <h2>Manage tasks</h2>
         <div class="add-search">
             <div class="categories">
-                <h2>Manage tasks</h2>
                 <div class="cat-holder">
-                    <span>Filter:</span>
-                    <p id="all">All</p>
-                    <p id="complet">Completed</p>
-                    <p id="uncomplet">Uncompleted</p>
-                    <p id="in-progress">In progress</p>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <p id="month"></p>
-                    <p id="number-tasks"></p>
+                    <span class="cat-flex"></span>
                 </div>
                 <p id="time" class="dark-mode-enabled button-style"></p>
             </div>
@@ -60,7 +52,10 @@
                 </svg>
             </div>
         </div>
-
+        <div class="time-task-display" style="display: flex; align-items: center; gap: 10px;">
+            <p id="month"></p>
+            <p id="number-tasks"></p>
+        </div>
         <dialog id="input-task">
             <form id="form">
                 <h1 style="font-size: small; color: beige;" id="title-dialog">Add a task</h1>
@@ -89,8 +84,6 @@
         <section class="display-items">
             <p id="task-message">No task to show</p>
             <div class="tasks-container" id="task-holder">
-            </div>
-            <div class="motnth-time">   
             </div>
             <dialog id="message">
                 <p id="error-message"></p>

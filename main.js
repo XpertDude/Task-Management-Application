@@ -265,7 +265,12 @@ function resetDisplay() {
     });
 }
 function filterTasks(status) {
-    resetDisplay();
+    resetDisplay(); // Always reset the display before applying any filter
+    if (status.toLowerCase() === 'all') {
+        // If "All" is selected, do not hide any tasks, just return
+        return;
+    }
+    // Otherwise, filter tasks based on the selected status
     document.querySelectorAll('.statut').forEach((e) => {
         const taskStatus = e.innerText.trim().toLowerCase();
         const parentElement = e.parentElement.parentElement;
@@ -281,10 +286,47 @@ items.forEach(item => {
         item.classList.add('active');
     });
 });
-catAll.addEventListener('click', resetDisplay);
-catComplete.addEventListener('click', () => filterTasks('Completed'));
-catUncomplet.addEventListener('click', () => filterTasks('Uncompleted'));
-catInprogress.addEventListener('click', () => filterTasks('In progress'));
+// Function to update the filter element based on screen size
+const filterList = () => {
+    const catFlex = document.querySelector('.cat-flex');
+    if (window.matchMedia('(max-width: 920px)').matches) {
+        // If the screen width is 920px or less, use a select element
+        catFlex.innerHTML = `                        
+            <select name="filter" id="filter-tasks">
+                <option disabled selected>Filter</option>
+                <option id="all" value="All">All</option>
+                <option id="complet" value="Completed">Completed</option>
+                <option id="uncomplet" value="Uncompleted">Uncompleted</option>
+                <option id="in-progress" value="In progress">In progress</option>
+            </select>`;
+        
+        // Add event listener to the select element for filtering tasks
+        const select = document.querySelector('#filter-tasks');
+        select.addEventListener('change', (event) => {
+            const selectedValue = event.target.value;
+            filterTasks(selectedValue);
+        });
+    } else {
+        // If the screen width is greater than 920px, use span and p elements
+        catFlex.innerHTML = `                        
+            <span>Filter:</span>
+            <p id="all">All</p>
+            <p id="complet">Completed</p>
+            <p id="uncomplet">Uncompleted</p>
+            <p id="in-progress">In progress</p>`;
+        
+        // Add event listeners to each p element for filtering tasks
+        document.querySelectorAll('.cat-flex > p').forEach((item) => {
+            item.addEventListener('click', () => {
+                filterTasks(item.innerText);
+            });
+        });
+    }
+};
+// Run the function on page load
+filterList();
+// Add an event listener for window resize to update the filter live
+window.addEventListener('resize', filterList);
 //creat date format in a container
 function displayDate() {
     let date = new Date();
@@ -392,5 +434,3 @@ clearAllTasks.addEventListener('click', () => {
         })
     }
 });
-
-console.log(style);

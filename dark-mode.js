@@ -18,7 +18,7 @@ const darkMode = () => {
         });
         document.querySelector('nav').classList.add('nav-style');
         document.body.classList.add('body-style');
-        
+        document.getElementById('notification-container').style.backgroundColor = '#8a70ff';
         if (document.getElementById('search-bar')) {
             document.getElementById('search-bar').style.backgroundColor = 'rgb(139, 156, 231)';
         } else {
@@ -40,6 +40,7 @@ const darkMode = () => {
         });
         document.querySelector('nav').classList.remove('nav-style');
         document.body.classList.remove('body-style');
+        document.getElementById('notification-container').style.backgroundColor = '';
         
         if (document.getElementById('search-bar')) {
             document.getElementById('search-bar').style.backgroundColor = '';

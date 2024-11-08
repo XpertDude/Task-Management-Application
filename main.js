@@ -395,7 +395,6 @@ function notificationTask() {
                 } else {
                     document.getElementById('notification-number').textContent = notificationsSent;
                 }
-                savtaskToLocalStorage();
             return;
         }
     });

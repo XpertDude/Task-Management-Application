@@ -12,6 +12,8 @@ const errorDialog = document.getElementById('message');
 const closeErrorMessage = document.getElementById('btn-Close-Error');
 let messageContent = document.getElementById('error-message');
 const clearAllTasks = document.getElementById('clear-tasks');
+const notificationContainer = document.getElementById('notification-container');
+const notificationDiv = document.getElementById('notification-div');
 //creatin object and id tracker to handle the nested objects
 let taskObj = {};
 let curId = null;
@@ -373,12 +375,11 @@ async function sendNotification(title, body) {
         messageContent.innerHTML = `Notification permission not granted <br>please grant access to recieve notification about your tasks`;  
     }
 }
-
+let notificationSent = false;
 function notificationTask() {
     const nowDate = new Date();
     const formattedNowDate = `${nowDate.getFullYear()}-${(nowDate.getMonth() + 1).toString().padStart(2, '0')}-${nowDate.getDate().toString().padStart(2, '0')}`;
     let notificationsSent = 0;
-
     Object.keys(taskObj).forEach(taskId => {
         const obj = taskObj[taskId];
         const taskDateText = obj.date;
@@ -386,13 +387,28 @@ function notificationTask() {
             return;
         }
         if (taskDateText === formattedNowDate) {
-            sendNotification(`Your task "${obj.title}" is scheduled for today!`);
-            notificationsSent++;
+                notificationContainer.innerHTML += `<p class='notification'>Your task "<span style="color:red;">${obj.title}</span>" is scheduled for today!</p>`;
+                sendNotification(`Your task "${obj.title}" is scheduled for today!`);
+                notificationsSent++;
+                if (notificationContainer.innerHTML === '') {
+                    document.getElementById('notification-number').textContent = '';
+                } else {
+                    document.getElementById('notification-number').textContent = notificationsSent;
+                }
+                savtaskToLocalStorage();
+            return;
         }
     });
 }
-setInterval(notificationTask, 2000000);
-document.getElementById('notification').addEventListener('click', notificationTask);
+let clicks = 0;
+document.getElementById('notification').addEventListener('click', () => {
+    notificationDiv.style.display = 'block';
+    clicks += 1;
+    if (clicks % 2 === 0) {
+        notificationDiv.style.display = 'none';
+    }
+})
+setInterval(notificationTask, 200000)
 //creating function to handle search input
 function filterByTitle(title) {
     resetDisplay(); 

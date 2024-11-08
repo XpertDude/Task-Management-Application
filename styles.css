@@ -457,6 +457,47 @@ main{
     display: flex;
     align-items: center;
 }
+
+#notification-div{
+    position: absolute;
+    right: 130px;
+    top: 200px;
+    display: none;
+    z-index: 10;
+}
+
+#notification-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: auto;
+    border-radius: 5%;
+    text-wrap: wrap;
+    gap: 5px;
+    padding: 4px;
+    font-size: small;
+    background-color: #0a061f;
+    width: 200px;
+    height: 250px;
+}
+
+#notification{
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid grey;
+}
+
+#notification-number{
+    position: absolute;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-size: x-small;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
 /*size for deffirent screens*/
 @media screen and (max-width: 614px){
     nav{
@@ -485,4 +526,52 @@ main{
     nav{
         font-size: 8px;
     }
+    .home{
+        display: grid;
+        grid-template-columns: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #notification-div{
+        right: 230px;
+        top: 300px;
+    }
 }
+
+@media screen and (max-width: 412px){
+    #notification-div{
+        right: 120px;
+        top: 300px;
+    }
+}
+
+@media screen and (max-width: 344px){
+    #notification-div{
+        right: 80px;
+        top: 300px;
+    }
+}
+
+@media screen and (max-width: 540px){
+    #notification-div{
+        right: 190px;
+        top: 300px;
+    }
+}
+
+@media screen and (max-width: 915px){
+    #notification-div{
+        right: 125px;
+        top: 300px;
+    }
+}
+
+@media screen and (max-width: 740px){
+    #notification-div{
+        right: 95px;
+        top: 300px;
+    }
+}
+
+
